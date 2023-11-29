@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
 
+import React, { useState } from 'react';
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
+// Azure Vision API
 const AnalyzeImage = ({ imageUrl, onAnalysisResult }) => {
   const [result, setResult] = useState(null);
 
   const handleAnalysis = async () => {
     try {
-      const endpoint = '';
-      const subscriptionKey = '';
-      //&features=Tags
+      const endpoint = process.env.REACT_APP_AZURE_ENDPOINT?? '';  //verifica que la variable no sea nula
+      const subscriptionKey = process.env.REACT_APP_AZURE_SUBSCRIPTION_KEY?? '';
+      console.log(endpoint);
       const url = `${endpoint}/computervision/imageanalysis:analyze?api-version=2023-02-01-preview&language=en&features=caption`;
       const response = await fetch(url, {
         method: 'POST',
